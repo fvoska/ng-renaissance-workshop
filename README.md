@@ -4,6 +4,12 @@
 
 To start a local development server, run:
 
+```typescript
+class Foo {
+	bar = 'bar';
+}
+```
+
 ```bash
 ng serve
 ```

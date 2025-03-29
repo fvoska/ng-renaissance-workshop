@@ -1,0 +1,30 @@
+:host {
+	display: block;
+	min-height: 100dvh;
+	background-color: var(--infinum-grey4);
+}
+
+main {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 5rem;
+}
+
+section {
+	background-color: var(--infinum-white);
+	border-radius: 1rem;
+	padding: 2rem;
+}
+
+::ng-deep h1 {
+	text-align: center;
+}
+
+img {
+	display: block;
+	width: 100%;
+	max-width: 400px;
+	margin-top: 4rem;
+	margin-left: auto;
+	margin-right: auto;
+}

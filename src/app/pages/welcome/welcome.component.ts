@@ -1,6 +1,6 @@
+import { MARKDOWN_PARSER } from '@/app/providers';
 import { httpResource } from '@angular/common/http';
-import { Component, computed } from '@angular/core';
-import { parse } from 'marked';
+import { Component, computed, inject } from '@angular/core';
 
 @Component({
 	selector: 'arw-welcome',
@@ -8,6 +8,7 @@ import { parse } from 'marked';
 	styleUrl: './welcome.component.scss',
 })
 export class WelcomeComponent {
+	private readonly markdownParser = inject(MARKDOWN_PARSER);
 	protected readonly markdownContent = httpResource.text('./README.md');
-	protected readonly parsedContent = computed(() => parse(this.markdownContent.value() ?? ''));
+	protected readonly parsedContent = computed(() => this.markdownParser.parse(this.markdownContent.value() ?? ''));
 }

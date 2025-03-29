@@ -33,7 +33,7 @@
 								"input": "./"
 							}
 						],
-						"styles": ["src/styles.scss"],
+						"styles": ["src/app/styles/main.scss"],
 						"scripts": [],
 						"server": "src/main.server.ts",
 						"outputMode": "server",
@@ -90,9 +90,13 @@
 							{
 								"glob": "**/*",
 								"input": "public"
+							},
+							{
+								"glob": "README.md",
+								"input": "./"
 							}
 						],
-						"styles": ["src/styles.scss"],
+						"styles": ["src/app/styles/main.scss"],
 						"scripts": []
 					}
 				},
