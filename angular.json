@@ -12,7 +12,7 @@
 			},
 			"root": "",
 			"sourceRoot": "src",
-			"prefix": "app",
+			"prefix": "ngr",
 			"architect": {
 				"build": {
 					"builder": "@angular-devkit/build-angular:application",
@@ -27,6 +27,10 @@
 							{
 								"glob": "**/*",
 								"input": "public"
+							},
+							{
+								"glob": "README.md",
+								"input": "./"
 							}
 						],
 						"styles": ["src/styles.scss"],
