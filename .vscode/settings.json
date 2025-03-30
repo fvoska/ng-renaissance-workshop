@@ -1,4 +1,7 @@
 {
 	"cSpell.words": ["infinum"],
-	"javascript.preferences.importModuleSpecifier": "shortest"
+	"javascript.preferences.importModuleSpecifier": "shortest",
+	"stylelint.reportNeedlessDisables": true,
+	"stylelint.validate": ["css", "scss"],
+	"stylelint.snippet": ["css", "scss"]
 }

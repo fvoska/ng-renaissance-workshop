@@ -1,13 +1,13 @@
 :host {
 	display: block;
 	min-height: 100dvh;
-	background-color: var(--infinum-grey4);
+	background-color: var(--infinum-grey2);
 }
 
 main {
 	max-width: 1200px;
 	margin: 0 auto;
-	padding: 5rem;
+	padding: 2rem;
 }
 
 section {
@@ -16,15 +16,14 @@ section {
 	padding: 2rem;
 }
 
+/* stylelint-disable-next-line selector-pseudo-element-no-unknown */
 ::ng-deep h1 {
 	text-align: center;
+	margin-top: 1rem;
 }
 
 img {
-	display: block;
 	width: 100%;
-	max-width: 400px;
-	margin-top: 4rem;
-	margin-left: auto;
-	margin-right: auto;
+	max-width: 225px;
+	margin-bottom: 1rem;
 }

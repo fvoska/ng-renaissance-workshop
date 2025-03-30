@@ -1,0 +1,7 @@
+{
+	"extends": ["stylelint-config-standard-scss", "stylelint-config-recommended-scss", "prettier"],
+	"rules": {
+		"no-empty-source": null,
+		"color-hex-length": "long"
+	}
+}
