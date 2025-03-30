@@ -22,8 +22,19 @@ section {
 	margin-top: 1rem;
 }
 
-img {
+.logo-infinum {
 	width: 100%;
 	max-width: 225px;
-	margin-bottom: 1rem;
+}
+
+.logo-github {
+	height: 32px;
+}
+
+header {
+	width: 100%;
+	padding-bottom: 1rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
