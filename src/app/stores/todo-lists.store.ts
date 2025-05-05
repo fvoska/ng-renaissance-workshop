@@ -1,19 +1,26 @@
+import { TodoListsService } from '@/services/todo-lists.service';
 import { TodoList } from '@/types/todo-list.type';
-import { patchState, signalStore, withMethods } from '@ngrx/signals';
-import { addEntity, removeEntity, setAllEntities, withEntities } from '@ngrx/signals/entities';
+import { inject } from '@angular/core';
+import { rxResource } from '@angular/core/rxjs-interop';
+import { signalStore, withMethods, withProps } from '@ngrx/signals';
 
 export const TodoListsStore = signalStore(
 	{ providedIn: 'root' },
-	withEntities<TodoList & { id: string }>(),
+	withProps((_store, todoListsService = inject(TodoListsService)) => ({
+		todosResource: rxResource({
+			loader: () => todoListsService.getAll(),
+			defaultValue: undefined,
+		}),
+	})),
 	withMethods(store => ({
-		setAll(todos: TodoList[]) {
-			patchState(store, setAllEntities(todos));
+		reload() {
+			store.todosResource.reload();
 		},
 		add(todo: TodoList) {
-			patchState(store, addEntity(todo));
+			store.todosResource.update(todos => [...(todos ?? []), todo]);
 		},
 		remove(id: string) {
-			patchState(store, removeEntity(id));
+			store.todosResource.update(todos => todos?.filter(todo => todo.id !== id));
 		},
 	}))
 );
