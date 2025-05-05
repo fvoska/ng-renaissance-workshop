@@ -18,9 +18,17 @@ const DB_VERSION = 1;
 const MIN_DELAY_MS = 50;
 const MAX_DELAY_MS = 800;
 
+// Error configuration
+const ERROR_RATE = 0.15; // 15% chance of returning a 500 error
+
 // Helper function to generate a random delay
 function getRandomDelay(): number {
 	return Math.floor(Math.random() * (MAX_DELAY_MS - MIN_DELAY_MS + 1)) + MIN_DELAY_MS;
+}
+
+// Helper function to determine if an error should be returned
+function shouldReturnError(): boolean {
+	return Math.random() < ERROR_RATE;
 }
 
 // Helper function to generate IDs
@@ -127,6 +135,14 @@ export const handlers = [
 	// GET all todo lists
 	http.get('/api/todo-lists', async () => {
 		await delay(getRandomDelay());
+
+		if (shouldReturnError()) {
+			return new HttpResponse(null, {
+				status: 500,
+				statusText: 'Internal Server Error',
+			});
+		}
+
 		const todoLists = await getAllTodoLists();
 		return HttpResponse.json(todoLists);
 	}),
@@ -134,6 +150,14 @@ export const handlers = [
 	// GET single todo list
 	http.get('/api/todo-lists/:id', async ({ params }) => {
 		await delay(getRandomDelay());
+
+		if (shouldReturnError()) {
+			return new HttpResponse(null, {
+				status: 500,
+				statusText: 'Internal Server Error',
+			});
+		}
+
 		const id = params['id'] as string;
 		const todoList = await getTodoList(id);
 
@@ -150,6 +174,13 @@ export const handlers = [
 	// POST create new todo list
 	http.post('/api/todo-lists', async ({ request }) => {
 		await delay(getRandomDelay());
+
+		if (shouldReturnError()) {
+			return new HttpResponse(null, {
+				status: 500,
+				statusText: 'Internal Server Error',
+			});
+		}
 
 		const validation = await validateRequestBody(request, todoListCreationPayloadSchema);
 
@@ -170,6 +201,14 @@ export const handlers = [
 	// PUT update todo list
 	http.put('/api/todo-lists/:id', async ({ params, request }) => {
 		await delay(getRandomDelay());
+
+		if (shouldReturnError()) {
+			return new HttpResponse(null, {
+				status: 500,
+				statusText: 'Internal Server Error',
+			});
+		}
+
 		const id = params['id'] as string;
 
 		const validation = await validateRequestBody(request, todoListUpdatePayloadSchema);
@@ -199,6 +238,14 @@ export const handlers = [
 	// DELETE todo list
 	http.delete('/api/todo-lists/:id', async ({ params }) => {
 		await delay(getRandomDelay());
+
+		if (shouldReturnError()) {
+			return new HttpResponse(null, {
+				status: 500,
+				statusText: 'Internal Server Error',
+			});
+		}
+
 		const id = params['id'] as string;
 		const deleted = await deleteTodoList(id);
 

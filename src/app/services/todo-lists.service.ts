@@ -6,7 +6,7 @@ import { TodoList, TodoListCreationPayload } from '../types/todo-list.type';
 @Injectable({
 	providedIn: 'root',
 })
-export class TodoListService {
+export class TodoListsService {
 	private apiUrl = '/api/todo-lists';
 	private readonly http = inject(HttpClient);
 

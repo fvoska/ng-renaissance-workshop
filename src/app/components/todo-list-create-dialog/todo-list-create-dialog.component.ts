@@ -1,5 +1,5 @@
 import { createTodoListForm } from '@/forms/todo-list.form';
-import { TodoListService } from '@/services/todo-list.service';
+import { TodoListsService } from '@/services/todo-lists.service';
 import { TodoListsStore } from '@/stores/todo-lists.store';
 import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -21,7 +21,7 @@ import { TodoListFormComponent } from '../todo-list-form/todo-list-form.componen
 export class TodoListCreateDialogComponent {
 	protected readonly isLoading = signal(false);
 	private readonly todoListsStore = inject(TodoListsStore);
-	private readonly todoListService = inject(TodoListService);
+	private readonly todoListsService = inject(TodoListsService);
 	protected readonly form = createTodoListForm();
 	protected readonly dialogRef = inject(MatDialogRef<typeof this>);
 	private readonly destroyRef = inject(DestroyRef);
@@ -36,7 +36,7 @@ export class TodoListCreateDialogComponent {
 		this.form.disable();
 		this.isLoading.set(true);
 
-		this.todoListService
+		this.todoListsService
 			.create(this.form.getRawValue())
 			.pipe(
 				takeUntilDestroyed(this.destroyRef),

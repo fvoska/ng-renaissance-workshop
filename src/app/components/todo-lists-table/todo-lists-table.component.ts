@@ -1,6 +1,7 @@
-import { TodoListService } from '@/services/todo-list.service';
+import { TodoListsService } from '@/services/todo-lists.service';
 import { TodoListsStore } from '@/stores/todo-lists.store';
-import { Component, inject, signal } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
+import { rxResource } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -14,9 +15,26 @@ import { MatTableModule } from '@angular/material/table';
 	animations: [],
 })
 export class TodoListsTableComponent {
+	protected readonly todosResource = rxResource({
+		loader: () => this.todoListsService.getAll(),
+		defaultValue: undefined,
+	});
+
+	constructor() {
+		effect(() => {
+			const todos = this.todosResource.value();
+
+			if (todos) {
+				this.todoListsStore.setAll(todos);
+			}
+		});
+
+		this.todosResource.reload();
+	}
+
 	protected readonly deletingRecord = signal<Partial<Record<string, boolean>>>({});
 	protected readonly todoListsStore = inject(TodoListsStore);
-	protected readonly todoListService = inject(TodoListService);
+	protected readonly todoListsService = inject(TodoListsService);
 	protected readonly displayedColumns = ['title', 'items', 'actions'];
 
 	protected onDeleteClick(id: string) {
@@ -24,7 +42,7 @@ export class TodoListsTableComponent {
 			[id]: true,
 		});
 
-		this.todoListService.delete(id).subscribe(() => {
+		this.todoListsService.delete(id).subscribe(() => {
 			this.todoListsStore.remove(id);
 			this.deletingRecord.set({
 				[id]: false,

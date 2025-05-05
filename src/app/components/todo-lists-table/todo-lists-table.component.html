@@ -29,10 +29,13 @@
 	<tr *matNoDataRow>
 		<td class="mat-cell" [attr.colspan]="displayedColumns.length">
 			<div class="placeholder">
-				@if (!todoListsStore.isLoading()) {
-					<p>There are no todo lists</p>
-				} @else {
+				@if (todosResource.isLoading()) {
 					<mat-spinner [diameter]="48"></mat-spinner>
+				} @else if (todosResource.error()) {
+					<p>Error loading todo lists</p>
+					<button (click)="todosResource.reload()" mat-flat-button>Retry</button>
+				} @else {
+					<p>There are no todo lists</p>
 				}
 			</div>
 		</td>
