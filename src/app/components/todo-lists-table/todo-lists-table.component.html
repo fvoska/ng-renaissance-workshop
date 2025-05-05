@@ -5,13 +5,13 @@
 	</ng-container>
 
 	<ng-container matColumnDef="items">
-		<th *matHeaderCellDef mat-header-cell>Items</th>
-		<td *matCellDef="let todoList" mat-cell>{{ todoList.items.length }}</td>
+		<th class="align-right" *matHeaderCellDef mat-header-cell style="width: 50px">Items</th>
+		<td class="align-right" *matCellDef="let todoList" mat-cell>{{ todoList.items.length }}</td>
 	</ng-container>
 
 	<ng-container matColumnDef="actions">
-		<th *matHeaderCellDef mat-header-cell>Actions</th>
-		<td *matCellDef="let todoList" mat-cell>
+		<th class="align-right" *matHeaderCellDef mat-header-cell style="width: 150px">Actions</th>
+		<td class="align-right" *matCellDef="let todoList" mat-cell>
 			<button [disabled]="deletingRecord()[todoList.id]" (click)="onEditClick(todoList.id)" mat-icon-button>
 				<mat-icon>edit</mat-icon>
 			</button>
