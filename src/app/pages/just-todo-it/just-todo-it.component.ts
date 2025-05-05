@@ -5,12 +5,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-	selector: 'arw-index',
+	selector: 'arw-just-todo-it',
 	imports: [TodoListsTableComponent, MatButtonModule],
-	templateUrl: './index.component.html',
-	styleUrl: './index.component.scss',
+	templateUrl: './just-todo-it.component.html',
+	styleUrl: './just-todo-it.component.scss',
 })
-export class IndexComponent {
+export class JustTodoItComponent {
 	private readonly dialog = inject(MatDialog);
 
 	onAddClick() {

@@ -11,7 +11,7 @@ export const routes: Routes = [
 		loadComponent: () => import('./pages/welcome/welcome.component').then(m => m.WelcomeComponent),
 	},
 	{
-		path: 'app',
-		loadComponent: () => import('./pages/index/index.component').then(m => m.IndexComponent),
+		path: 'just-todo-it',
+		loadComponent: () => import('./pages/just-todo-it/just-todo-it.component').then(m => m.JustTodoItComponent),
 	},
 ];

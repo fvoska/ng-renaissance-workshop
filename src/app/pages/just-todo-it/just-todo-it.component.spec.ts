@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { IndexComponent } from './index.component';
+import { JustTodoItComponent } from './just-todo-it.component';
 
 describe('IndexComponent', () => {
-	let component: IndexComponent;
-	let fixture: ComponentFixture<IndexComponent>;
+	let component: JustTodoItComponent;
+	let fixture: ComponentFixture<JustTodoItComponent>;
 
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
-			imports: [IndexComponent],
+			imports: [JustTodoItComponent],
 		}).compileComponents();
 
-		fixture = TestBed.createComponent(IndexComponent);
+		fixture = TestBed.createComponent(JustTodoItComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();
 	});
