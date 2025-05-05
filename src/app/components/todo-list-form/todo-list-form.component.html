@@ -1,0 +1,9 @@
+<input [formControl]="form().controls.title" />
+
+<textarea [formControl]="form().controls.description"></textarea>
+
+@for (item of form().controls.items.controls; track item; let index = $index) {
+	<arw-todo-list-item-form [form]="item" (delete)="onDeleteItemClick(index)" />
+}
+
+<button (click)="onAddItemClick()">Add item</button>

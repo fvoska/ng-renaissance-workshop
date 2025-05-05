@@ -1,0 +1,5 @@
+<input [formControl]="form().controls.text" />
+
+<input [formControl]="form().controls.completed" (change)="onCheckboxChange($event)" type="checkbox" />
+
+<button (click)="onDeleteClick()">Delete</button>

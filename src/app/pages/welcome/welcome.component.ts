@@ -1,4 +1,4 @@
-import { MARKDOWN_PARSER } from '@/app/providers';
+import { MARKDOWN_PARSER } from '@/providers';
 import { httpResource } from '@angular/common/http';
 import { Component, computed, inject } from '@angular/core';
 
