@@ -14,11 +14,9 @@ export class IndexComponent {
 	private readonly dialog = inject(MatDialog);
 
 	onAddClick() {
-		this.dialog
-			.open(TodoListCreateDialogComponent)
-			.afterClosed()
-			.subscribe(result => {
-				console.log(result);
-			});
+		this.dialog.open(TodoListCreateDialogComponent, {
+			disableClose: true,
+			closeOnNavigation: true,
+		});
 	}
 }

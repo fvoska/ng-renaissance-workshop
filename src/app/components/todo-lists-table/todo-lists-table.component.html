@@ -12,8 +12,12 @@
 	<ng-container matColumnDef="actions">
 		<th *matHeaderCellDef mat-header-cell>Actions</th>
 		<td *matCellDef="let todoList" mat-cell>
-			<button mat-icon-button>
+			<button [disabled]="deletingRecord()[todoList.id]" (click)="onEditClick(todoList.id)" mat-icon-button>
 				<mat-icon>edit</mat-icon>
+			</button>
+
+			<button [disabled]="deletingRecord()[todoList.id]" (click)="onDeleteClick(todoList.id)" mat-icon-button>
+				<mat-icon>delete</mat-icon>
 			</button>
 		</td>
 	</ng-container>
@@ -23,6 +27,14 @@
 	<tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
 
 	<tr *matNoDataRow>
-		<td class="mat-cell" [attr.colspan]="displayedColumns.length">No todos</td>
+		<td class="mat-cell" [attr.colspan]="displayedColumns.length">
+			<div class="placeholder">
+				@if (!todoListsStore.isLoading()) {
+					<p>There are no todo lists</p>
+				} @else {
+					<mat-spinner [diameter]="48"></mat-spinner>
+				}
+			</div>
+		</td>
 	</tr>
 </table>
