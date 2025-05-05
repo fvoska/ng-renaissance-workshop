@@ -1,7 +1,7 @@
 :host {
 	display: block;
 	min-height: 100dvh;
-	background-color: var(--infinum-grey2);
+	background-color: #e4ebf5;
 }
 
 main {
@@ -11,15 +11,9 @@ main {
 }
 
 section {
-	background-color: var(--infinum-white);
+	background-color: white;
 	border-radius: 1rem;
 	padding: 2rem;
-}
-
-/* stylelint-disable-next-line selector-pseudo-element-no-unknown */
-::ng-deep h1 {
-	text-align: center;
-	margin-top: 1rem;
 }
 
 .logo-infinum {
@@ -37,4 +31,99 @@ header {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+}
+
+::ng-deep {
+	// Headings
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		font-weight: bold;
+		margin-bottom: 1rem;
+	}
+
+	h1 {
+		font-size: 120px;
+		line-height: 118px;
+		text-align: center;
+		margin-top: 1rem;
+	}
+
+	h2 {
+		font-size: 80px;
+		line-height: 82px;
+	}
+
+	h3 {
+		font-size: 52px;
+		line-height: 58px;
+	}
+
+	h4 {
+		font-size: 36px;
+		line-height: 42px;
+	}
+
+	h5 {
+		font-size: 24px;
+		line-height: 32px;
+	}
+
+	h6 {
+		font-size: 20px;
+		line-height: 30px;
+	}
+
+	// Paragraphs
+	p {
+		font-size: 16px;
+		line-height: 23px;
+		margin-bottom: 1.5rem;
+	}
+
+	// Links
+	a {
+		color: #d82828;
+		text-decoration: none;
+		transition: color 0.2s ease;
+
+		&:hover {
+			color: color-mix(in srgb, #d82828 90%, black);
+			text-decoration: underline;
+		}
+	}
+
+	// Lists
+	ul,
+	ol {
+		margin-bottom: 1.5rem;
+		padding-left: 1.5rem;
+	}
+
+	li {
+		font-size: 16px;
+		line-height: 23px;
+		margin-bottom: 0.5rem;
+	}
+
+	// Responsive adjustments
+	@media (width <= 768px) {
+		h1 {
+			font-size: 80px;
+			line-height: 82px;
+		}
+
+		h2 {
+			font-size: 52px;
+			line-height: 58px;
+		}
+
+		h3 {
+			font-size: 36px;
+			line-height: 42px;
+		}
+	}
 }
