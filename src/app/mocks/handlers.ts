@@ -1,17 +1,8 @@
 import { IDBPDatabase, openDB } from 'idb';
 import { delay, http, HttpResponse } from 'msw';
 import { z } from 'zod';
-import {
-	FilterParams,
-	filterParamsSchema,
-	PaginatedResponse,
-	PaginationParams,
-	paginationParamsSchema,
-	SortParams,
-	sortParamsSchema,
-} from '../types/query-params.type';
 import { TodoListItem, todoListItemSchema } from '../types/todo-list-item.type';
-import { TodoList, todoListSchema } from '../types/todo-list.type';
+import { TodoList, todoListCreateSchema, todoListSchema } from '../types/todo-list.type';
 
 // Database setup
 const DB_NAME = 'todo-app-db';
@@ -109,156 +100,13 @@ async function validateRequestBody<T>(
 	}
 }
 
-// Parse URL search params
-function parseSearchParams<T>(
-	url: URL,
-	schema: z.ZodType<T>
-): { success: true; data: T } | { success: false; errors: z.ZodError } {
-	try {
-		const params: Record<string, string> = {};
-		url.searchParams.forEach((value, key) => {
-			params[key] = value;
-		});
-		const result = schema.parse(params);
-		return { success: true, data: result };
-	} catch (error) {
-		if (error instanceof z.ZodError) {
-			return { success: false, errors: error };
-		}
-		throw error;
-	}
-}
-
-// Apply pagination to data
-function paginate<T>(data: T[], { page, limit }: PaginationParams): PaginatedResponse<T> {
-	const startIndex = (page - 1) * limit;
-	const endIndex = startIndex + limit;
-	const paginatedData = data.slice(startIndex, endIndex);
-
-	return {
-		data: paginatedData,
-		meta: {
-			currentPage: page,
-			totalPages: Math.ceil(data.length / limit),
-			pageSize: limit,
-			totalItems: data.length,
-		},
-	};
-}
-
-// Apply filtering to todo lists
-function filterTodoLists(todoLists: TodoList[], filters: FilterParams): TodoList[] {
-	return todoLists.filter(todoList => {
-		// Filter by title
-		if (filters.title && !todoList.title.toLowerCase().includes(filters.title.toLowerCase())) {
-			return false;
-		}
-
-		// Filter by description
-		if (filters.description && !todoList.description.toLowerCase().includes(filters.description.toLowerCase())) {
-			return false;
-		}
-
-		// Filter by items completion status
-		if (filters.hasCompletedItems !== undefined) {
-			const hasCompletedItems = todoList.items.some(item => item.completed);
-			if (hasCompletedItems !== filters.hasCompletedItems) {
-				return false;
-			}
-		}
-
-		return true;
-	});
-}
-
-// Apply sorting to todo lists
-function sortTodoLists(todoLists: TodoList[], { sortBy, direction }: SortParams): TodoList[] {
-	return [...todoLists].sort((a, b) => {
-		const valueA = a[sortBy].toLowerCase();
-		const valueB = b[sortBy].toLowerCase();
-
-		if (valueA < valueB) {
-			return direction === 'asc' ? -1 : 1;
-		}
-		if (valueA > valueB) {
-			return direction === 'asc' ? 1 : -1;
-		}
-		return 0;
-	});
-}
-
 // API handlers
 export const handlers = [
-	// GET all todo lists (with pagination, filtering and sorting)
-	http.get('/api/todo-lists', async ({ request }) => {
+	// GET all todo lists
+	http.get('/api/todo-lists', async () => {
 		await delay(getRandomDelay());
-		const url = new URL(request.url);
-
-		// Parse pagination params
-		const paginationResult = parseSearchParams(url, paginationParamsSchema);
-		if (!paginationResult.success) {
-			return HttpResponse.json(
-				{
-					message: 'Invalid pagination parameters',
-					errors: paginationResult.errors.format(),
-				},
-				{ status: 400 }
-			);
-		}
-
-		// Parse sorting params
-		const sortingResult = parseSearchParams(url, sortParamsSchema);
-		if (!sortingResult.success) {
-			return HttpResponse.json(
-				{
-					message: 'Invalid sorting parameters',
-					errors: sortingResult.errors.format(),
-				},
-				{ status: 400 }
-			);
-		}
-
-		// Parse filter params
-		const filterResult = parseSearchParams(url, filterParamsSchema);
-		if (!filterResult.success) {
-			return HttpResponse.json(
-				{
-					message: 'Invalid filter parameters',
-					errors: filterResult.errors.format(),
-				},
-				{ status: 400 }
-			);
-		}
-
-		// Extract params with their default values
-		const paginationParams: PaginationParams = {
-			page: paginationResult.data.page ?? 1,
-			limit: paginationResult.data.limit ?? 10,
-		};
-
-		const sortParams: SortParams = {
-			sortBy: sortingResult.data.sortBy ?? 'title',
-			direction: sortingResult.data.direction ?? 'asc',
-		};
-
-		const filterParams = filterResult.data;
-
-		console.log('filterParams', filterParams);
-		console.log('sortParams', sortParams);
-		console.log('paginationParams', paginationParams);
-
-		let todoLists = await getAllTodoLists();
-
-		// Apply filtering
-		todoLists = filterTodoLists(todoLists, filterParams);
-
-		// Apply sorting
-		todoLists = sortTodoLists(todoLists, sortParams);
-
-		// Apply pagination
-		const paginatedResult = paginate(todoLists, paginationParams);
-
-		return HttpResponse.json(paginatedResult);
+		const todoLists = await getAllTodoLists();
+		return HttpResponse.json(todoLists);
 	}),
 
 	// GET single todo list
@@ -281,12 +129,7 @@ export const handlers = [
 	http.post('/api/todo-lists', async ({ request }) => {
 		await delay(getRandomDelay());
 
-		// Use a modified schema that makes id optional
-		const todoListSchemaWithOptionalId = todoListSchema.extend({
-			id: z.string().optional(),
-		});
-
-		const validation = await validateRequestBody(request, todoListSchemaWithOptionalId);
+		const validation = await validateRequestBody(request, todoListCreateSchema);
 
 		if (!validation.success) {
 			return HttpResponse.json(
@@ -298,19 +141,16 @@ export const handlers = [
 			);
 		}
 
-		const todoListData = validation.data;
+		const { items, ...todoListData } = validation.data;
 
-		// Generate ID if not provided
 		const todoList: TodoList = {
+			id: crypto.randomUUID(),
 			...todoListData,
-			id: todoListData.id ?? crypto.randomUUID(),
+			items: items.map(item => ({
+				...item,
+				id: crypto.randomUUID(),
+			})),
 		};
-
-		// Ensure each item has an ID
-		todoList.items = todoList.items.map(item => ({
-			...item,
-			id: item.id || crypto.randomUUID(),
-		}));
 
 		const createdTodoList = await createTodoList(todoList);
 		return HttpResponse.json(createdTodoList, { status: 201 });

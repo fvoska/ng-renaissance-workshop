@@ -1,0 +1,15 @@
+:host {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.text-form-field {
+	flex: 1;
+}
+
+mat-checkbox,
+button {
+	margin-top: -20px;
+}

@@ -1,9 +1,8 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { PaginatedResponse, TodoListQueryParams } from '../types/query-params.type';
 import { TodoListItem } from '../types/todo-list-item.type';
-import { TodoList } from '../types/todo-list.type';
+import { TodoList, TodoListCreate } from '../types/todo-list.type';
 
 @Injectable({
 	providedIn: 'root',
@@ -14,37 +13,8 @@ export class TodoListService {
 	constructor(private http: HttpClient) {}
 
 	// Get all todo lists with pagination, filtering, and sorting
-	getTodoLists(params: Partial<TodoListQueryParams> = {}): Observable<PaginatedResponse<TodoList>> {
-		let httpParams = new HttpParams();
-
-		// Add pagination params
-		if (params.page) {
-			httpParams = httpParams.set('page', params.page.toString());
-		}
-		if (params.limit) {
-			httpParams = httpParams.set('limit', params.limit.toString());
-		}
-
-		// Add sorting params
-		if (params.sortBy) {
-			httpParams = httpParams.set('sortBy', params.sortBy);
-		}
-		if (params.direction) {
-			httpParams = httpParams.set('direction', params.direction);
-		}
-
-		// Add filtering params
-		if (params.title) {
-			httpParams = httpParams.set('title', params.title);
-		}
-		if (params.description) {
-			httpParams = httpParams.set('description', params.description);
-		}
-		if (params.hasCompletedItems !== undefined) {
-			httpParams = httpParams.set('hasCompletedItems', params.hasCompletedItems.toString());
-		}
-
-		return this.http.get<PaginatedResponse<TodoList>>(this.apiUrl, { params: httpParams });
+	getTodoLists(): Observable<TodoList[]> {
+		return this.http.get<TodoList[]>(this.apiUrl);
 	}
 
 	// Get a single todo list by ID
@@ -53,7 +23,7 @@ export class TodoListService {
 	}
 
 	// Create a new todo list
-	createTodoList(todoList: Omit<TodoList, 'id'>): Observable<TodoList> {
+	createTodoList(todoList: TodoListCreate): Observable<TodoList> {
 		return this.http.post<TodoList>(this.apiUrl, todoList);
 	}
 
