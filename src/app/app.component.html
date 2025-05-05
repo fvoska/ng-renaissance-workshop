@@ -1,1 +1,34 @@
-<router-outlet></router-outlet>
+<header>
+	<nav>
+		<ul class="main-links">
+			<li>
+				<a href="https://infinum.com/" target="_blank" title="Go to Infinum website" target="_blank">
+					<img class="logo-infinum" alt="Infinum logo" src="./assets/images/infinum-logo.svg" />
+				</a>
+			</li>
+
+			<li>
+				<a routerLink="/welcome" routerLinkActive="active">Welcome</a>
+			</li>
+
+			<li>
+				<a routerLink="/app" routerLinkActive="active">App</a>
+			</li>
+		</ul>
+
+		<ul class="additional-links">
+			<li>
+				<a
+					href="https://github.com/fvoska/ng-renaissance-workshop"
+					target="_blank"
+					title="Go to the Workshop repository">
+					<img class="logo-github" alt="GitHub logo" src="./assets/images/github-mark.svg" />
+				</a>
+			</li>
+		</ul>
+	</nav>
+</header>
+
+<main>
+	<router-outlet></router-outlet>
+</main>

@@ -29,3 +29,19 @@ body {
 	margin: 0;
 	font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
+
+a {
+	color: #d82828;
+	text-decoration: none;
+	transition: color 0.2s ease;
+
+	&:hover,
+	&.active {
+		text-decoration: underline;
+		text-decoration-color: black;
+	}
+
+	&.active {
+		font-weight: bold;
+	}
+}

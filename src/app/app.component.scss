@@ -1,0 +1,52 @@
+:host {
+	display: block;
+	min-height: 100dvh;
+	background-color: #e4ebf5;
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 2rem;
+}
+
+main {
+	background-color: white;
+	border-radius: 1rem;
+	padding: 2rem;
+}
+
+.logo-infinum {
+	width: 100%;
+	max-width: 225px;
+}
+
+.logo-github {
+	height: 32px;
+}
+
+header {
+	width: 100%;
+	padding-bottom: 1rem;
+}
+
+nav {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 16px;
+
+	ul {
+		padding-inline: 0;
+		gap: 48px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+
+		li {
+			list-style: none;
+
+			a {
+				color: black;
+				text-decoration-color: #d82828;
+			}
+		}
+	}
+}

@@ -3,10 +3,15 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
 	{
 		path: '',
-		loadComponent: () => import('./pages/index/index.component').then(m => m.IndexComponent),
+		redirectTo: 'welcome',
+		pathMatch: 'full',
 	},
 	{
 		path: 'welcome',
 		loadComponent: () => import('./pages/welcome/welcome.component').then(m => m.WelcomeComponent),
+	},
+	{
+		path: 'app',
+		loadComponent: () => import('./pages/index/index.component').then(m => m.IndexComponent),
 	},
 ];
