@@ -3,6 +3,7 @@ import { FormValue, RawFormValue } from '@infinum/ngx-nuts-and-bolts/form-utils'
 
 export function createTodoListItemForm() {
 	return new FormGroup({
+		id: new FormControl<string | null>(null),
 		text: new FormControl('', { validators: [Validators.required], nonNullable: true }),
 		completed: new FormControl(false, { nonNullable: true }),
 	});

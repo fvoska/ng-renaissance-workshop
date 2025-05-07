@@ -19,6 +19,9 @@ export const TodoListsStore = signalStore(
 		add(todo: TodoList) {
 			store.todosResource.update(todos => [...(todos ?? []), todo]);
 		},
+		update(updatedTodo: TodoList) {
+			store.todosResource.update(todos => todos?.map(todo => (todo.id === updatedTodo.id ? updatedTodo : todo)));
+		},
 		remove(id: string) {
 			store.todosResource.update(todos => todos?.filter(todo => todo.id !== id));
 		},

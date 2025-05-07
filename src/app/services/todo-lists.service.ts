@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { TodoList, TodoListCreationPayload } from '../types/todo-list.type';
+import { TodoList, TodoListCreationPayload, TodoListUpdatePayload } from '../types/todo-list.type';
 
 @Injectable({
 	providedIn: 'root',
@@ -22,7 +22,7 @@ export class TodoListsService {
 		return this.http.post<TodoList>(this.apiUrl, todoList);
 	}
 
-	update(id: string, todoList: TodoList): Observable<TodoList> {
+	update(id: string, todoList: TodoListUpdatePayload): Observable<TodoList> {
 		return this.http.put<TodoList>(`${this.apiUrl}/${id}`, todoList);
 	}
 
