@@ -1,5 +1,4 @@
-import { TodoListItemForm } from '@/forms/todo-list-item.form';
-import { Component, input, output } from '@angular/core';
+import { Component, output } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -13,12 +12,7 @@ import { MatInputModule } from '@angular/material/input';
 	styleUrl: './todo-list-item-form.component.scss',
 })
 export class TodoListItemFormComponent {
-	public readonly form = input.required<TodoListItemForm>();
 	public readonly delete = output<void>();
-
-	public onCheckboxChange() {
-		this.form().controls.completed.setValue(this.form().controls.completed.value);
-	}
 
 	public onDeleteClick() {
 		this.delete.emit();

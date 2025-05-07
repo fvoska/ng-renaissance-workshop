@@ -1,7 +1,6 @@
 import { TodoListsService } from '@/services/todo-lists.service';
-import { TodoListsStore } from '@/stores/todo-lists.store';
 import { TodoList } from '@/types/todo-list.type';
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -16,23 +15,12 @@ import { TodoListEditDialogComponent } from '../todo-list-edit-dialog/todo-list-
 	styleUrl: './todo-lists-table.component.scss',
 })
 export class TodoListsTableComponent {
-	protected readonly deletingRecord = signal<Partial<Record<string, boolean>>>({});
-	protected readonly todoListsStore = inject(TodoListsStore);
 	protected readonly todoListsService = inject(TodoListsService);
 	private readonly dialog = inject(MatDialog);
 	protected readonly displayedColumns = ['title', 'items', 'actions'];
 
 	protected onDeleteClick(id: string) {
-		this.deletingRecord.set({
-			[id]: true,
-		});
-
-		this.todoListsService.delete(id).subscribe(() => {
-			this.todoListsStore.remove(id);
-			this.deletingRecord.set({
-				[id]: false,
-			});
-		});
+		this.todoListsService.delete(id).subscribe();
 	}
 
 	protected onEditClick(todoList: TodoList) {
