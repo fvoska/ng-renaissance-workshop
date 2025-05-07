@@ -1,10 +1,11 @@
+import { provideMarkdownParser } from '@/providers';
+import { GlobalErrorHandler } from '@/services/global-error-handler';
 import { provideHttpClient, withFetch } from '@angular/common/http';
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, ErrorHandler, provideZoneChangeDetection } from '@angular/core';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
-import { provideMarkdownParser } from './providers';
 
 export const appConfig: ApplicationConfig = {
 	providers: [
@@ -14,5 +15,9 @@ export const appConfig: ApplicationConfig = {
 		provideClientHydration(withEventReplay()),
 		provideMarkdownParser(),
 		provideAnimations(),
+		{
+			provide: ErrorHandler,
+			useClass: GlobalErrorHandler,
+		},
 	],
 };

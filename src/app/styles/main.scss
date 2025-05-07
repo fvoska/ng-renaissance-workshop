@@ -46,3 +46,11 @@ a {
 		font-weight: bold;
 	}
 }
+
+.mdc-snackbar {
+	&.error {
+		--mdc-snackbar-container-color: #d82828;
+		--mdc-snackbar-supporting-text-color: white;
+		--mat-snack-bar-button-color: white;
+	}
+}

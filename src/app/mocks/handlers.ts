@@ -1,13 +1,13 @@
-import { IDBPDatabase, openDB } from 'idb';
-import { delay, http, HttpResponse } from 'msw';
-import { z } from 'zod';
 import {
 	TodoList,
 	TodoListCreationPayload,
 	todoListCreationPayloadSchema,
 	TodoListUpdatePayload,
 	todoListUpdatePayloadSchema,
-} from '../types/todo-list.type';
+} from '@/types/todo-list.type';
+import { IDBPDatabase, openDB } from 'idb';
+import { delay, http, HttpResponse } from 'msw';
+import { z } from 'zod';
 
 // Database setup
 const DB_NAME = 'todo-app-db';
