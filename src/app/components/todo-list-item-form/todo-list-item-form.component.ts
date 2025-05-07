@@ -16,10 +16,6 @@ export class TodoListItemFormComponent {
 	public readonly form = input.required<TodoListItemForm>();
 	public readonly delete = output<void>();
 
-	public onCheckboxChange() {
-		this.form().controls.completed.setValue(this.form().controls.completed.value);
-	}
-
 	public onDeleteClick() {
 		this.delete.emit();
 	}

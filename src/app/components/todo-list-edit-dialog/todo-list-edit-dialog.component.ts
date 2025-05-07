@@ -3,7 +3,7 @@ import { createTodoListForm, TodoListForm } from '@/forms/todo-list.form';
 import { TodoListsService } from '@/services/todo-lists.service';
 import { TodoListsStore } from '@/stores/todo-lists.store';
 import { TodoList, TodoListUpdatePayload } from '@/types/todo-list.type';
-import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -20,7 +20,7 @@ import { TodoListFormComponent } from '../todo-list-form/todo-list-form.componen
 	styleUrl: './todo-list-edit-dialog.component.scss',
 	animations: [fadeAnimation()],
 })
-export class TodoListEditDialogComponent implements OnInit {
+export class TodoListEditDialogComponent {
 	protected readonly isLoading = signal(false);
 	private readonly todoListsStore = inject(TodoListsStore);
 	private readonly todoListsService = inject(TodoListsService);
@@ -29,14 +29,15 @@ export class TodoListEditDialogComponent implements OnInit {
 	private readonly destroyRef = inject(DestroyRef);
 	private readonly todoList = inject<TodoList>(MAT_DIALOG_DATA);
 
-	ngOnInit(): void {
-		this.form.patchValue({
+	constructor() {
+		this.form.reset({
 			title: this.todoList.title,
 			description: this.todoList.description,
 		});
+
 		this.todoList.items.forEach(item => {
 			const itemForm = createTodoListItemForm();
-			itemForm.patchValue(item);
+			itemForm.reset(item);
 			this.form.controls.items.push(itemForm);
 		});
 	}
