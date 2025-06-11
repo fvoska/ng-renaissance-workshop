@@ -1,18 +1,22 @@
 <mat-form-field>
 	<mat-label>Title</mat-label>
-	<input matInput />
+	<input [formControl]="form().controls.title" matInput />
+
+	@if (form().controls.title.hasError('required')) {
+		<mat-error>Required</mat-error>
+	}
 </mat-form-field>
 
 <mat-form-field>
 	<mat-label>Description</mat-label>
-	<textarea matInput></textarea>
+	<textarea [formControl]="form().controls.description" matInput></textarea>
 </mat-form-field>
 
 <mat-divider />
 
 <h3>Items</h3>
 
-<!-- @if (form().controls.items.length > 0) {
+@if (form().controls.items.length > 0) {
 	<div class="items-container" @fade @height>
 		@for (item of form().controls.items.controls; track item; let index = $index) {
 			<arw-todo-list-item-form @fade @height [form]="item" (delete)="onDeleteItemClick(index)" />
@@ -29,4 +33,4 @@
 	@if (form().controls.items.touched && form().controls.items.hasError('required')) {
 		<mat-error @fade @height>Please add at least one item</mat-error>
 	}
-</div> -->
+</div>

@@ -7,7 +7,7 @@ import { TodoList, TodoListCreationPayload, TodoListUpdatePayload } from '../typ
 	providedIn: 'root',
 })
 export class TodoListsService {
-	private apiUrl = '/api/todo-lists';
+	private readonly apiUrl = '/api/todo-lists';
 	private readonly http = inject(HttpClient);
 
 	getAll(): Observable<TodoList[]> {

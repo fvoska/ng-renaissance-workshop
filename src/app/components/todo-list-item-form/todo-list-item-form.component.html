@@ -1,8 +1,12 @@
-<mat-checkbox aria-label="Completed" />
+<mat-checkbox [formControl]="form().controls.completed" aria-label="Completed" />
 
 <mat-form-field class="text-form-field">
 	<mat-label>Text</mat-label>
-	<input matInput />
+	<input [formControl]="form().controls.text" matInput />
+
+	@if (form().controls.text.hasError('required')) {
+		<mat-error>Required</mat-error>
+	}
 </mat-form-field>
 
 <button (click)="onDeleteClick()" mat-icon-button aria-label="Delete" type="button">

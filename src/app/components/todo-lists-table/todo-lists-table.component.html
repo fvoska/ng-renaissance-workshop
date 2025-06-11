@@ -1,4 +1,4 @@
-<table [dataSource]="[]" mat-table>
+<table [dataSource]="todoListsStore.todoLists()" mat-table>
 	<ng-container matColumnDef="title">
 		<th *matHeaderCellDef mat-header-cell>Title</th>
 		<td *matCellDef="let todoList" mat-cell>{{ todoList.title }}</td>
@@ -26,18 +26,18 @@
 
 	<tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
 
-	<!-- <tr *matNoDataRow>
+	<tr *matNoDataRow>
 		<td class="mat-cell" [attr.colspan]="displayedColumns.length">
 			<div class="placeholder">
-				@if (todoListsStore.todosResource.isLoading()) {
+				@if (todoListsStore.loading()) {
 					<mat-spinner [diameter]="48"></mat-spinner>
-				} @else if (todoListsStore.todosResource.error()) {
+				} @else if (todoListsStore.error()) {
 					<p>Error loading todo lists</p>
-					<button (click)="todoListsStore.reload()" mat-flat-button>Retry</button>
+					<button (click)="onRetry()" mat-flat-button>Retry</button>
 				} @else {
 					<p>There are no todo lists</p>
 				}
 			</div>
 		</td>
-	</tr> -->
+	</tr>
 </table>

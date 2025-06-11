@@ -14,9 +14,14 @@ export class JustTodoItComponent {
 	private readonly dialog = inject(MatDialog);
 
 	onAddClick() {
-		this.dialog.open(TodoListCreateDialogComponent, {
-			disableClose: true,
-			closeOnNavigation: true,
-		});
+		this.dialog
+			.open(TodoListCreateDialogComponent, {
+				disableClose: true,
+				closeOnNavigation: true,
+			})
+			.afterClosed()
+			.subscribe(() => {
+				//refresh the table
+			});
 	}
 }
