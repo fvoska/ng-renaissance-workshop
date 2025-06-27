@@ -10,6 +10,6 @@ import { Component, computed, inject, ViewEncapsulation } from '@angular/core';
 })
 export class WelcomeComponent {
 	private readonly markdownParser = inject(MARKDOWN_PARSER);
-	protected readonly markdownContent = httpResource.text('./README.md');
+	protected readonly markdownContent = httpResource.text(() => './README.md');
 	protected readonly parsedContent = computed(() => this.markdownParser.parse(this.markdownContent.value() ?? ''));
 }
