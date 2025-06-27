@@ -73,5 +73,11 @@
 		"workerDirectory": [
 			"public"
 		]
+	},
+	"overrides": {
+		"@ngrx/signals": {
+			"@angular/common": "$@angular/common",
+			"@angular/core": "$@angular/core"
+		}
 	}
 }
