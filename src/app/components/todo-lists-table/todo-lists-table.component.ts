@@ -24,7 +24,7 @@ export class TodoListsTableComponent {
 	protected readonly displayedColumns = ['title', 'items', 'actions'];
 
 	protected onRetry() {
-		this.todoListsStore.loadTodoLists();
+		this.todoListsStore.loadAll();
 	}
 
 	protected onDeleteClick(id: string) {

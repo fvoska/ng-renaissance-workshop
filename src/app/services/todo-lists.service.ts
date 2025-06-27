@@ -1,3 +1,4 @@
+import { IDataFetchingService } from '@/stores/features/with-crud.store-feature';
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -6,7 +7,7 @@ import { TodoList, TodoListCreationPayload, TodoListUpdatePayload } from '../typ
 @Injectable({
 	providedIn: 'root',
 })
-export class TodoListsService {
+export class TodoListsService implements IDataFetchingService<TodoList, TodoListCreationPayload> {
 	private readonly apiUrl = '/api/todo-lists';
 	private readonly http = inject(HttpClient);
 

@@ -1,4 +1,4 @@
-<table [dataSource]="todoListsStore.todoLists()" mat-table>
+<table [dataSource]="todoListsStore.entities()" mat-table>
 	<ng-container matColumnDef="title">
 		<th *matHeaderCellDef mat-header-cell>Title</th>
 		<td *matCellDef="let todoList" mat-cell>{{ todoList.title }}</td>

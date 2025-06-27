@@ -26,7 +26,7 @@ export class TodoListCreateDialogComponent {
 			return;
 		}
 
-		await this.todoListsStore.addTodoList(this.form.getRawValue());
+		await this.todoListsStore.add(this.form.getRawValue());
 
 		this.dialogRef.close();
 	}
