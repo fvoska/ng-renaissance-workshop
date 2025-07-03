@@ -17,12 +17,11 @@ main {
 	background-color: white;
 	border-radius: 1rem;
 	padding: 2rem;
+	flex: 1;
 
 	@media (width < 768px) {
 		border-radius: 0;
 	}
-
-	flex: 1;
 }
 
 .logo-infinum {
