@@ -7,7 +7,9 @@ import { TodoList, TodoListCreationPayload, TodoListUpdatePayload } from '../typ
 @Injectable({
 	providedIn: 'root',
 })
-export class TodoListsService implements IDataFetchingService<TodoList, TodoListCreationPayload> {
+export class TodoListsService
+	implements IDataFetchingService<TodoList, TodoListCreationPayload, TodoListUpdatePayload>
+{
 	private readonly apiUrl = '/api/todo-lists';
 	private readonly http = inject(HttpClient);
 

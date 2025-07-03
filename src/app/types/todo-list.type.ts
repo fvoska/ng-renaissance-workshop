@@ -10,7 +10,7 @@ export const todoListSchema = z.object({
 export const todoListCreationPayloadSchema = todoListSchema.omit({ id: true }).extend({
 	items: z.array(todoListItemCreationPayloadSchema),
 });
-export const todoListUpdatePayloadSchema = todoListSchema.extend({
+export const todoListUpdatePayloadSchema = todoListSchema.omit({ id: true }).extend({
 	items: z.array(z.union([todoListItemSchema, todoListItemCreationPayloadSchema])),
 });
 

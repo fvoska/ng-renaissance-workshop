@@ -1,4 +1,4 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
+<form #ngForm="ngForm" [formGroup]="form" (ngSubmit)="onSubmit()">
 	<h1 mat-dialog-title>Create Todo List</h1>
 
 	<mat-dialog-content>
@@ -7,10 +7,12 @@
 
 	<mat-dialog-actions>
 		<button type="button" mat-button mat-dialog-close>Cancel</button>
-		<button type="submit" mat-flat-button>Create</button>
+		<button [disabled]="(ngForm.invalid && ngForm.submitted) || form.disabled" type="submit" mat-flat-button>
+			Create
+		</button>
 	</mat-dialog-actions>
 </form>
 
-<!-- @if (isLoading()) {
+@if (form.disabled) {
 	<mat-progress-bar @fade mode="indeterminate"></mat-progress-bar>
-} -->
+}

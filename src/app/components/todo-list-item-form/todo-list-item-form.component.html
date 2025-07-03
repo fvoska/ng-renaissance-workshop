@@ -9,6 +9,6 @@
 	}
 </mat-form-field>
 
-<button (click)="onDeleteClick()" mat-icon-button aria-label="Delete" type="button">
+<button [disabled]="form().disabled" (click)="onDeleteClick()" mat-icon-button aria-label="Delete" type="button">
 	<mat-icon>delete</mat-icon>
 </button>

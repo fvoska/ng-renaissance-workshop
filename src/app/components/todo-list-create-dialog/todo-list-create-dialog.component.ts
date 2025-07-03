@@ -1,3 +1,4 @@
+import { createTodoListForm } from '@/forms/todo-list.form';
 import { TodoListsStore } from '@/stores/todo-lists.store';
 import { Component, inject } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -5,7 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { fadeAnimation } from '@infinum/ngx-nuts-and-bolts/animations';
-import { createTodoListForm, TodoListFormComponent } from '../todo-list-form/todo-list-form.component';
+import { TodoListFormComponent } from '../todo-list-form/todo-list-form.component';
 
 @Component({
 	selector: 'arw-todo-list-create-dialog',
@@ -26,8 +27,13 @@ export class TodoListCreateDialogComponent {
 			return;
 		}
 
-		await this.todoListsStore.add(this.form.getRawValue());
+		this.form.disable();
 
-		this.dialogRef.close();
+		try {
+			await this.todoListsStore.add(this.form.getRawValue());
+			this.dialogRef.close();
+		} finally {
+			this.form.enable();
+		}
 	}
 }

@@ -25,7 +25,13 @@
 }
 
 <div class="add-item-container">
-	<button class="add-item-button" (click)="onAddItemClick()" mat-fab extended type="button">
+	<button
+		class="add-item-button"
+		[disabled]="form().disabled"
+		(click)="onAddItemClick()"
+		mat-fab
+		extended
+		type="button">
 		<mat-icon>add</mat-icon>
 		Add item
 	</button>
