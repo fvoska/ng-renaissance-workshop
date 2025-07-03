@@ -20,7 +20,7 @@ export interface IDataFetchingService<
 }
 
 export function withCrud<TEntity extends BaseEntity, TCreationPayload extends object, TUpdatePayload extends object>(
-	dataFetchingServiceCtor: new () => IDataFetchingService<TEntity, TCreationPayload, TUpdatePayload>
+	dataFetchingServiceClass: new () => IDataFetchingService<TEntity, TCreationPayload, TUpdatePayload>
 ) {
 	return signalStoreFeature(
 		withLoadingState(),
@@ -29,7 +29,7 @@ export function withCrud<TEntity extends BaseEntity, TCreationPayload extends ob
 			(
 				store,
 				dataFetchingService = inject<IDataFetchingService<TEntity, TCreationPayload, TUpdatePayload>>(
-					dataFetchingServiceCtor
+					dataFetchingServiceClass
 				)
 			) => ({
 				loadAll: () => {
