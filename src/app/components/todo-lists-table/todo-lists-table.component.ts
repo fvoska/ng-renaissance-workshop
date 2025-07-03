@@ -1,6 +1,6 @@
 import { TodoListsStore } from '@/stores/todo-lists.store';
 import { TodoList } from '@/types/todo-list.type';
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -16,6 +16,7 @@ import { TodoListEditDialogComponent } from '../todo-list-edit-dialog/todo-list-
 })
 export class TodoListsTableComponent {
 	protected readonly todoListsStore = inject(TodoListsStore);
+	protected readonly deletingIds = signal<Record<string, boolean>>({});
 
 	private readonly dialog = inject(MatDialog);
 	protected readonly displayedColumns = ['title', 'items', 'actions'];
@@ -24,8 +25,18 @@ export class TodoListsTableComponent {
 		this.todoListsStore.loadAll();
 	}
 
-	protected onDeleteClick(id: string) {
-		this.todoListsStore.delete(id);
+	protected async onDeleteClick(id: string) {
+		this.deletingIds.update(ids => ({ ...ids, [id]: true }));
+
+		try {
+			await this.todoListsStore.delete(id);
+		} finally {
+			this.deletingIds.update(ids => {
+				const newIds = { ...ids };
+				delete newIds[id];
+				return newIds;
+			});
+		}
 	}
 
 	protected onEditClick(todoList: TodoList) {

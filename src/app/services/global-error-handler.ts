@@ -8,7 +8,7 @@ export class GlobalErrorHandler implements ErrorHandler {
 
 	handleError(error: unknown) {
 		if (error instanceof HttpErrorResponse) {
-			this.snackBar.open(error.message, 'Close', {
+			this.snackBar.open(error.error ? JSON.stringify(error.error) : error.message, 'Close', {
 				duration: 5000,
 				verticalPosition: 'top',
 				horizontalPosition: 'center',

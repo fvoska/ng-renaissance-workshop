@@ -8,10 +8,10 @@ export const todoListSchema = z.object({
 	items: z.array(todoListItemSchema).min(1),
 });
 export const todoListCreationPayloadSchema = todoListSchema.omit({ id: true }).extend({
-	items: z.array(todoListItemCreationPayloadSchema),
+	items: z.array(todoListItemCreationPayloadSchema).min(1),
 });
 export const todoListUpdatePayloadSchema = todoListSchema.omit({ id: true }).extend({
-	items: z.array(z.union([todoListItemSchema, todoListItemCreationPayloadSchema])),
+	items: z.array(z.union([todoListItemSchema, todoListItemCreationPayloadSchema])).min(1),
 });
 
 export type TodoList = z.infer<typeof todoListSchema>;

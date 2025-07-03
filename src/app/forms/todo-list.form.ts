@@ -5,7 +5,7 @@ export function createTodoListForm() {
 	return new FormGroup({
 		title: new FormControl('', { validators: [Validators.required], nonNullable: true }),
 		description: new FormControl('', { nonNullable: true }),
-		items: new FormArray<TodoListItemForm>([]),
+		items: new FormArray<TodoListItemForm>([], { validators: [Validators.required] }),
 	});
 }
 

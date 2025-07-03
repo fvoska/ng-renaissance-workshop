@@ -32,16 +32,15 @@ export function withCrud<TEntity extends BaseEntity, TCreationPayload extends ob
 					dataFetchingServiceClass
 				)
 			) => ({
-				loadAll: () => {
-					patchState(store, { loading: true });
-					dataFetchingService.getAll().subscribe(
-						entities => {
-							patchState(store, setAllEntities(entities), { loading: false });
-						},
-						error => {
-							patchState(store, { error, loading: false });
-						}
-					);
+				loadAll: async () => {
+					patchState(store, { loading: true, error: null });
+
+					try {
+						const entities = await lastValueFrom(dataFetchingService.getAll());
+						patchState(store, setAllEntities(entities), { loading: false });
+					} catch (error) {
+						patchState(store, { error: error as Error, loading: false });
+					}
 				},
 				add: async (todoList: TCreationPayload) => {
 					const newEntity = await lastValueFrom(dataFetchingService.create(todoList));
@@ -51,10 +50,9 @@ export function withCrud<TEntity extends BaseEntity, TCreationPayload extends ob
 					const updatedEntity = await lastValueFrom(dataFetchingService.update(id, todoList));
 					patchState(store, updateEntity({ id, changes: updatedEntity }));
 				},
-				delete: (id: string) => {
-					dataFetchingService.delete(id).subscribe(() => {
-						patchState(store, removeEntity(id));
-					});
+				delete: async (id: string) => {
+					await lastValueFrom(dataFetchingService.delete(id));
+					patchState(store, removeEntity(id));
 				},
 			})
 		)

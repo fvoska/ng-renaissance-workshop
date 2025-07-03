@@ -16,8 +16,12 @@
 				<mat-icon>edit</mat-icon>
 			</button>
 
-			<button (click)="onDeleteClick(todoList.id)" mat-icon-button>
-				<mat-icon>delete</mat-icon>
+			<button [disabled]="deletingIds()[todoList.id]" (click)="onDeleteClick(todoList.id)" mat-icon-button>
+				@if (deletingIds()[todoList.id]) {
+					<mat-spinner [diameter]="20"></mat-spinner>
+				} @else {
+					<mat-icon>delete</mat-icon>
+				}
 			</button>
 		</td>
 	</ng-container>
