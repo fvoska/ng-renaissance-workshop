@@ -46,7 +46,7 @@ export class TodoListEditDialogComponent {
 	private createTodoListForm() {
 		const form = createTodoListForm();
 
-		const todoList = this.todoListsStore.entityMap()[this.dialogData.id];
+		const todoList = this.todoListsStore.entities.value().find(entity => entity.id === this.dialogData.id);
 
 		if (!todoList) {
 			console.error('Todo list not found', this.dialogData.id);

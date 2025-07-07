@@ -1,8 +1,6 @@
-import { inject } from '@angular/core';
-import { patchState, signalStoreFeature, withMethods } from '@ngrx/signals';
-import { addEntity, removeEntity, setAllEntities, updateEntity, withEntities } from '@ngrx/signals/entities';
+import { inject, resource } from '@angular/core';
+import { signalStoreFeature, withMethods, withProps } from '@ngrx/signals';
 import { lastValueFrom, Observable } from 'rxjs';
-import { withLoadingState } from './with-loading-state.store-feature';
 
 type BaseEntity = {
 	id: string;
@@ -23,8 +21,24 @@ export function withCrud<TEntity extends BaseEntity, TCreationPayload extends ob
 	dataFetchingServiceClass: new () => IDataFetchingService<TEntity, TCreationPayload, TUpdatePayload>
 ) {
 	return signalStoreFeature(
-		withLoadingState(),
-		withEntities<TEntity>(),
+		withProps(
+			(
+				_store,
+				dataFetchingService = inject<IDataFetchingService<TEntity, TCreationPayload, TUpdatePayload>>(
+					dataFetchingServiceClass
+				)
+			) => ({
+				_entities: resource({
+					defaultValue: [] as TEntity[],
+					loader: async () => {
+						return lastValueFrom(dataFetchingService.getAll());
+					},
+				}),
+			})
+		),
+		withProps(store => ({
+			entities: store._entities.asReadonly(),
+		})),
 		withMethods(
 			(
 				store,
@@ -32,27 +46,20 @@ export function withCrud<TEntity extends BaseEntity, TCreationPayload extends ob
 					dataFetchingServiceClass
 				)
 			) => ({
-				loadAll: async () => {
-					patchState(store, { loading: true, error: null });
-
-					try {
-						const entities = await lastValueFrom(dataFetchingService.getAll());
-						patchState(store, setAllEntities(entities), { loading: false });
-					} catch (error) {
-						patchState(store, { error: error as Error, loading: false });
-					}
-				},
 				add: async (todoList: TCreationPayload) => {
 					const newEntity = await lastValueFrom(dataFetchingService.create(todoList));
-					patchState(store, addEntity(newEntity));
+					store._entities.update(entities => [...entities, newEntity]);
 				},
 				update: async (id: string, todoList: TUpdatePayload) => {
 					const updatedEntity = await lastValueFrom(dataFetchingService.update(id, todoList));
-					patchState(store, updateEntity({ id, changes: updatedEntity }));
+					store._entities.update(entities => entities.map(entity => (entity.id === id ? updatedEntity : entity)));
 				},
 				delete: async (id: string) => {
 					await lastValueFrom(dataFetchingService.delete(id));
-					patchState(store, removeEntity(id));
+					store._entities.update(entities => entities.filter(entity => entity.id !== id));
+				},
+				reload: () => {
+					store._entities.reload();
 				},
 			})
 		)

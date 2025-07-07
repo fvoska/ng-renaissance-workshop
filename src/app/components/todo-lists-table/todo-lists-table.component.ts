@@ -22,7 +22,7 @@ export class TodoListsTableComponent {
 	protected readonly displayedColumns = ['title', 'items', 'actions'];
 
 	protected onRetry() {
-		this.todoListsStore.loadAll();
+		this.todoListsStore.reload();
 	}
 
 	protected async onDeleteClick(id: string) {
