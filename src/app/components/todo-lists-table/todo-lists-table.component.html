@@ -1,4 +1,5 @@
-<table [dataSource]="[]" mat-table>
+<button (click)="loadingTrigger$.next(undefined)">Refresh</button>
+<table [dataSource]="(todoLists$ | async) ?? []" mat-table>
 	<ng-container matColumnDef="title">
 		<th *matHeaderCellDef mat-header-cell>Title</th>
 		<td *matCellDef="let todoList" mat-cell>{{ todoList.title }}</td>
@@ -41,3 +42,11 @@
 		</td>
 	</tr> -->
 </table>
+
+@if (isLoading$ | async) {
+	Loading...
+}
+
+@if (error$ | async) {
+	<button (click)="loadingTrigger$.next(undefined)">Retry</button>
+}

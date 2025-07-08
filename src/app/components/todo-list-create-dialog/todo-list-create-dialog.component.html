@@ -1,16 +1,16 @@
-<form>
+<form #ngForm="ngForm" [formGroup]="form" (ngSubmit)="onSubmit()">
 	<h1 mat-dialog-title>Create Todo List</h1>
 
 	<mat-dialog-content>
-		<arw-todo-list-form></arw-todo-list-form>
+		<arw-todo-list-form [form]="form"></arw-todo-list-form>
 	</mat-dialog-content>
 
 	<mat-dialog-actions>
 		<button mat-button mat-dialog-close>Cancel</button>
-		<button type="submit" mat-flat-button>Create</button>
+		<button [disabled]="(ngForm.submitted && form.invalid) || isLoading()" type="submit" mat-flat-button>Create</button>
 	</mat-dialog-actions>
 </form>
 
-<!-- @if (isLoading()) {
+@if (isLoading()) {
 	<mat-progress-bar @fade mode="indeterminate"></mat-progress-bar>
-} -->
+}

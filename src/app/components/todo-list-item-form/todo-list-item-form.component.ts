@@ -1,10 +1,12 @@
-import { Component, output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { TodoListItemForm } from './todo-list-item-form';
+
 @Component({
 	selector: 'arw-todo-list-item-form',
 	imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatCheckboxModule, MatIconModule],
@@ -12,6 +14,7 @@ import { MatInputModule } from '@angular/material/input';
 	styleUrl: './todo-list-item-form.component.scss',
 })
 export class TodoListItemFormComponent {
+	public readonly form = input.required<TodoListItemForm>();
 	public readonly delete = output<void>();
 
 	public onDeleteClick() {

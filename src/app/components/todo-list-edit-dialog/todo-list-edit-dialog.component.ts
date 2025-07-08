@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { fadeAnimation } from '@infinum/ngx-nuts-and-bolts/animations';
+import { createTodoListForm } from '../todo-list-form/todo-list-form';
 import { TodoListFormComponent } from '../todo-list-form/todo-list-form.component';
 
 @Component({
@@ -13,4 +14,6 @@ import { TodoListFormComponent } from '../todo-list-form/todo-list-form.componen
 	styleUrl: './todo-list-edit-dialog.component.scss',
 	animations: [fadeAnimation()],
 })
-export class TodoListEditDialogComponent {}
+export class TodoListEditDialogComponent {
+	protected readonly form = createTodoListForm();
+}
