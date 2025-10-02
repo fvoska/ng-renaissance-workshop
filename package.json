@@ -14,7 +14,7 @@
 		"prepare": "husky"
 	},
 	"engines": {
-		"node": ">=22.22.0",
+		"node": ">=22.20.0",
 		"npm": ">=10.9.3"
 	},
 	"private": true,
