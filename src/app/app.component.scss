@@ -1,27 +1,40 @@
-:host {
-	display: flex;
-	flex-direction: column;
-	max-width: 1200px;
-	min-height: 100dvh;
-	margin: 0 auto;
-	padding: 2rem;
-
-	@media (width < 768px) {
-		padding-left: 0;
-		padding-right: 0;
-		padding-bottom: 0;
-	}
-}
-
 main {
+	margin: 0 auto 0.5rem;
 	background-color: white;
 	border-radius: 1rem;
 	padding: 2rem;
+	width: calc(100% - 0.5rem);
+	max-width: 1000px;
 	flex: 1;
+	box-shadow: var(--mat-sys-level2);
 
 	@media (width < 768px) {
-		border-radius: 0;
+		margin: 0 0.25rem;
+		padding: 1rem;
+		border-radius: 0.5rem;
 	}
+}
+
+mat-sidenav-content {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	padding: 1rem;
+
+	@media (width < 768px) {
+		padding: 0 0.25rem 0.5rem;
+	}
+}
+
+mat-toolbar {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.desktop-toolbar {
+	padding: 0 2rem;
 }
 
 .logo-infinum {
@@ -34,35 +47,41 @@ main {
 }
 
 header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	max-width: 1000px;
+	margin: 0 auto;
 	width: 100%;
-	padding-bottom: 1rem;
+}
+
+mat-sidenav-container {
+	height: 100%;
+}
+
+.spacer {
+	flex: 1 1 auto;
 
 	@media (width < 768px) {
-		padding-left: 2rem;
-		padding-right: 2rem;
+		display: none;
 	}
 }
 
-nav {
+.menu-button {
+	display: none;
+
+	@media (width < 768px) {
+		display: inline-flex;
+	}
+}
+
+.desktop-nav {
 	display: flex;
-	justify-content: space-between;
+	gap: 48px;
 	align-items: center;
-	gap: 16px;
+	font-size: 1.25rem;
 
-	ul {
-		padding-inline: 0;
-		gap: 48px;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-
-		li {
-			list-style: none;
-
-			a {
-				color: black;
-				text-decoration-color: #d82828;
-			}
-		}
+	@media (width < 768px) {
+		display: none;
 	}
 }

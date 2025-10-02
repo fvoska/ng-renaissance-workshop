@@ -72,6 +72,8 @@ arw-welcome {
 		h1 {
 			font-size: 80px;
 			line-height: 82px;
+			hyphens: auto;
+			word-break: break-word;
 		}
 
 		h2 {
