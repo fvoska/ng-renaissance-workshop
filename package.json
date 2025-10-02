@@ -13,6 +13,10 @@
 		"lint:scss:fix": "stylelint \"src/**/*.scss\" --fix",
 		"prepare": "husky"
 	},
+	"engines": {
+		"node": ">=22.22.0",
+		"npm": ">=10.9.3"
+	},
 	"private": true,
 	"dependencies": {
 		"@angular/cdk": "^20.2.7",
@@ -73,11 +77,5 @@
 		"workerDirectory": [
 			"public"
 		]
-	},
-	"overrides": {
-		"@ngrx/signals": {
-			"@angular/common": "$@angular/common",
-			"@angular/core": "$@angular/core"
-		}
 	}
 }
