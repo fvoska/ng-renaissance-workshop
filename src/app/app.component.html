@@ -1,34 +1,45 @@
-<header>
-	<nav>
-		<ul class="main-links">
-			<li>
-				<a href="https://infinum.com/" target="_blank" title="Go to Infinum website" target="_blank">
-					<img class="logo-infinum" alt="Infinum logo" src="./assets/images/infinum-logo.svg" />
-				</a>
-			</li>
-
-			<li>
-				<a routerLink="/welcome" routerLinkActive="active">Welcome</a>
-			</li>
-
-			<li>
-				<a routerLink="/just-todo-it" routerLinkActive="active">Just Todo It</a>
-			</li>
-		</ul>
-
-		<ul class="additional-links">
-			<li>
+<mat-sidenav-container>
+	<mat-sidenav #drawer mode="over">
+		<nav>
+			<mat-nav-list>
+				<a (click)="drawer.close()" mat-list-item routerLink="/welcome" routerLinkActive="active">Welcome</a>
+				<a (click)="drawer.close()" mat-list-item routerLink="/just-todo-it" routerLinkActive="active">Just Todo It</a>
 				<a
+					mat-list-item
 					href="https://github.com/fvoska/ng-renaissance-workshop"
 					target="_blank"
 					title="Go to the Workshop repository">
-					<img class="logo-github" alt="GitHub logo" src="./assets/images/github-mark.svg" />
+					GitHub
 				</a>
-			</li>
-		</ul>
-	</nav>
-</header>
+			</mat-nav-list>
+		</nav>
+	</mat-sidenav>
 
-<main>
-	<router-outlet></router-outlet>
-</main>
+	<mat-sidenav-content>
+		<header>
+			<mat-toolbar color="primary">
+				<a class="brand" routerLink="/">
+					<img class="logo-infinum" alt="Infinum logo" src="./assets/images/infinum-logo.svg" />
+				</a>
+				<button class="menu-button" (click)="drawer.toggle()" mat-icon-button aria-label="Open menu">
+					<mat-icon>menu</mat-icon>
+				</button>
+				<span class="spacer"></span>
+				<nav class="desktop-nav">
+					<a routerLink="/welcome" routerLinkActive="active">Welcome</a>
+					<a routerLink="/just-todo-it" routerLinkActive="active">Just Todo It</a>
+					<a
+						href="https://github.com/fvoska/ng-renaissance-workshop"
+						target="_blank"
+						title="Go to the Workshop repository">
+						<img class="logo-github" alt="GitHub logo" src="./assets/images/github-mark.svg" />
+					</a>
+				</nav>
+			</mat-toolbar>
+		</header>
+
+		<main>
+			<router-outlet></router-outlet>
+		</main>
+	</mat-sidenav-content>
+</mat-sidenav-container>
