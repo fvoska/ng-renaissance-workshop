@@ -1,5 +1,4 @@
-<button (click)="loadingTrigger$.next(undefined)">Refresh</button>
-<table [dataSource]="(todoLists$ | async) ?? []" mat-table>
+<table [dataSource]="todoListsStore.todoLists.value()" mat-table>
 	<ng-container matColumnDef="title">
 		<th *matHeaderCellDef mat-header-cell>Title</th>
 		<td *matCellDef="let todoList" mat-cell>{{ todoList.title }}</td>
@@ -27,12 +26,12 @@
 
 	<tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
 
-	<!-- <tr *matNoDataRow>
+	<tr *matNoDataRow>
 		<td class="mat-cell" [attr.colspan]="displayedColumns.length">
 			<div class="placeholder">
-				@if (todoListsStore.todosResource.isLoading()) {
+				@if (todoListsStore.todoLists.isLoading()) {
 					<mat-spinner [diameter]="48"></mat-spinner>
-				} @else if (todoListsStore.todosResource.error()) {
+				} @else if (todoListsStore.todoLists.error()) {
 					<p>Error loading todo lists</p>
 					<button (click)="todoListsStore.reload()" mat-flat-button>Retry</button>
 				} @else {
@@ -40,13 +39,5 @@
 				}
 			</div>
 		</td>
-	</tr> -->
+	</tr>
 </table>
-
-@if (isLoading$ | async) {
-	Loading...
-}
-
-@if (error$ | async) {
-	<button (click)="loadingTrigger$.next(undefined)">Retry</button>
-}

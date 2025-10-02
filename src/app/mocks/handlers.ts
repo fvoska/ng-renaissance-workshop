@@ -19,7 +19,7 @@ const MIN_DELAY_MS = 50;
 const MAX_DELAY_MS = 800;
 
 // Error configuration
-const ERROR_RATE = 0.5; // 15% chance of returning a 500 error
+const ERROR_RATE = 0.15; // 15% chance of returning a 500 error
 
 // Helper function to generate a random delay
 function getRandomDelay(): number {
